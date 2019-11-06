@@ -1,0 +1,58 @@
+<div class="row">
+
+    <div class="col-md-4 col-lg-3 nav-user">
+        <div class="identity">
+            <h2><?= $_SESSION['membre']->getField('prenom') . ' ' . $_SESSION['membre']->getField('nom') ?></h2>
+            <p><?= $_SESSION['membre']->getField('email') ?></p>
+        </div>
+        <div class="">
+            <ul class="nav" id="tab" role="tablist">
+                <li>
+                    <a class="nav-link" href="<?= $url ?>membre/moncompte"><i class="fa fa-user"></i>Mes informations personnelles</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="<?= $url ?>membre/mesidentifiants"><i class="fas fa-lock"></i>Mes identifiants</a>
+                </li>
+                <li>
+                    <a class="nav-link active" href="<?= $url ?>commande/mescommandes"><i class="fas fa-shopping-bag"></i>Mes commandes</a>
+                </li>
+            </ul>
+        </div>
+        <a href="<?= $url ?>membre/deconnexion">
+            <input type="text" name="deconnexion" id="deconnexion" value="Se déconnecter">
+        </a>
+    </div>
+
+
+    <div class="col-md-8 col-lg-9 content-user info-user">
+        <section class="wrapper">
+        <?php if (empty($commandes)) : ?>
+            <div class="alert alert-success">Vous n'avez pas encore de commandes</div>
+        <?php else : ?>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>N° Commande</th>
+                            <th>Date de commande</th>
+                            <th>Montant</th>
+                            <th>Etat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($commandes as $commande) : ?>
+                            <tr>
+                                <td><?= $commande->getField('id_commande') ?> <a href="<?= $url ?>commande/afficheDetailsCommande/<?= $commande->getField('id_commande') ?>"><i class="far fa-eye"></i></a></td>
+                                <td><?= date('d/m/Y à H:i:s',strtotime($commande->getField('date_enregistrement'))) ?></td>
+                                <td><?= $commande->getField('montant') ?> €</td>
+                                <td><?= $commande->getField('etat') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+            
+        </section>
+    </div>
+</div>

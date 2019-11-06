@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VDC Atelier<?= isset($title) ? ' - '.$title : '' ?></title>
+
+    <!-- Liens Google Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Yeseva+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Tinos:400i&display=swap" rel="stylesheet">
+
+    <!-- Liens icon -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- Bootstrap4 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Mon style -->
+    <link rel="stylesheet" href="<?= $url ?>css/style.css">
+
+</head>
+<body id="<?= $id ?>">
+    <header class="header-layout">
+        <div class="row top-header">
+            <div class="col-12 col-sm-6">
+                <form method="post" action="<?= $url ?>produit/recherche" class="search-container col-md-8">
+                    <input class="search-field col-10" type="text" placeholder="Recherche" aria-label="rechercher" name="term" value="<?= $_POST['term'] ?? '' ?>">
+                    <input class="btn col-1 search-input" type="submit" value=""name="rechercher">
+                </form>
+            </div>
+            <div class="col-12 col-sm-6 nav-top-header">
+                <div class="row">
+                    <?php if( !isset($_SESSION['membre'])) : ?>
+                    <li class="nav-user col-4 col-lg-7"> 
+                        <a class="" href="<?= $url ?>membre/connexion"><i class="fas fa-user"></i></a>
+                        <span>
+                            <a class="" href="<?= $url ?>membre/connexion">Connexion</a> / 
+                            <a class="" href="<?= $url ?>membre/inscription">Inscription</a>
+                        </span>
+                    </li>
+                    <?php else : ?>
+                    <li class="col-4 col-lg-7"> 
+                        <a class="" href="<?= $url ?>membre/moncompte">
+                            <i class="fa fa-user"></i><span><?= $_SESSION['membre']->getField('email') ?></span>
+                        </a>
+                        <?php endif; ?>
+                    </li> 
+
+                    <li class="col-4"> 
+                        <a class="" href="<?= $url ?>produit/panier">
+                            <i class="fa fa-shopping-cart"></i><span>Panier</span>
+                            <?php 
+                            if (!empty($nb)):
+                            ?>
+                            <span class="badge badge-primary"><?= $nb ?></span>
+                            <?php
+                            endif;
+                            ?>
+                        </a>
+                    </li>
+
+                    <div class="mobile-toggle col-4">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 content-logo">
+            <a href="<?= $url ?>"> <img src="https://picsum.photos/150/100" alt="" class="logo">  </a>
+        </div>
+
+        <div class="content-nav-layout">
+                <div class="row">
+                    <nav class="nav-layout">
+                    <ul>
+                        <li>
+                            <a href="<?= $url ?>produit/articles">Les articles</a>
+                        </li>
+                        <li>
+                            <a href="<?= $url ?>a-propos">A Propos</a>
+                        </li>
+                        <li> 
+                            <a href="<?= $url ?>me-contacter">Me Contacter</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div> 
+        </div> 
+
+
+    <!-- <nav class="navbar navbar-expand-md">
+        <a class="navbar-brand" href="<?= $url ?>">Awes'Mode</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+         
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= $url ?>"> <i class="fa fa-home"></i> Boutique <span class="sr-only">(current)</span></a>
+            </li>
+            <?php if( !isset($_SESSION['membre'])) : ?>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?= $url ?>membre/connexion">Connexion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $url ?>membre/inscription">Inscription</a>
+            </li>
+            <?php else : ?>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user"></i> <?= $_SESSION['membre']->getField('pseudo') ?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                    <a class="dropdown-item" href="<?= $url ?>membre/profil">Profil</a>
+                    <a class="dropdown-item" href="<?= $url ?>commande/afficheCommande">Commandes</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?= $url?>membre/deconnexion">Déconnexion</a>
+                </div>
+            </li>
+
+            <?php endif;
+            if ( isset($_SESSION['membre']) && $_SESSION['membre']->isAdmin() ) :
+            ?>
+            <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cogs"></i> Gestion de la boutique</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" href="<?= $url ?>produit/adminproduit">Gestion des produits</a>
+                        <a class="dropdown-item" href="<?= $url ?>membre/adminMembre">Gestion des membres</a>
+                        <a class="dropdown-item" href="<?= $url ?>commande/adminCommande">Gestion des commandes</a>
+                    </div>
+                </li>
+
+
+            <?php endif; ?>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $url ?>produit/panier">
+                    <i class="fa fa-shopping-cart"></i> Panier
+                    <?php 
+                    if (!empty($nb)):
+                    ?>
+                    <span class="badge badge-primary"><?= $nb ?></span>
+                    <?php
+                    endif;
+                    ?>
+                </a>
+            </li>
+
+        </ul>
+
+          <form class="form-inline mt-2 mt-md-0" action="<?= $url ?>produit/recherche" method="post">
+            <input class="form-control mr-sm-2" type="text" placeholder="rechercher" aria-label="rechercher" name="term" value="<?= $_POST['term'] ?? '' ?>">
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Rechercher" name="rechercher">
+          </form>
+        </div>
+      </nav> -->
+    </header>
+
+    <div class="block-content">
+
+        <?= $content ?>
+
+    </div>
+    <footer class="footer-layout">
+        <div class="row">
+            <div class="col-12 content-logo-footer">
+                <a href="<?= $url ?>" class="link-logo-footer">
+                    <img src="https://picsum.photos/150/100" alt="" class="logo">
+                </a>
+            </div>
+            <div class="col-12">
+                <nav class="nav-footer">
+                    <ul>
+                        <li>
+                            <a href="<?= $url ?>laboutique/cookies">Cookies</a>
+                        </li>
+                        <li>
+                            <a href="<?= $url ?>laboutique/conditionsgeneralesventes">CGV</a>
+                        </li>
+                        <li>
+                            <a href="<?= $url ?>laboutique/mentionslegales">Mentions légales</a>
+                        </li>
+                    </ul>
+                </nav> 
+            </div>
+            <div class="col-12 link-reseau">
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-facebook-messenger"></i></a>
+            </div>
+        </div>
+    </footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="<?= $url ?>js/functions.js"></script>
+<script src="<?= $url ?>js/jquery.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?php if ($produits !== false) : ?>
+    <h1>Votre recherche</h1>
+    <?php if($nbResultat > 1) : ?>
+    <p>Nous avons trouvé <?= $nbResultat ?> d'articles pour la recherche "<?= $title ?>"</p>
+    <?php else :?> 
+    <p>Nous avons trouvé <?= $nbResultat ?> d'article pour la recherche "<?= $title ?>"</p>
+    <?php endif; ?>
+
+    <div class="row">
+        <?php foreach($produits as $produit) : ?>
+        <div class="block-product col-10 col-sm-6 col-md-4 col-xl-3 px-1">
+
+            <a href="<?= $url ?>produit/affiche/<?= $produit->getField('id_produit') ?>">
+                <img src="<?= $url ?>photo/<?= $produit->getField('photo') ?>" alt="<?= $produit->getField('title') ?>" class="img-fluid">
+            </a>
+
+            <div class="row">
+                <h3 class="col-10"><a href="<?= $url ?>produit/affiche/<?= $produit->getField('id_produit') ?>"><?= $produit->getField('title') ?></a></h3>
+                <form method="post" action="">
+                    <input type="hidden" name="id_produit" value="<?= $produit->getField('id_produit') ?>">
+                    <input type="hidden" name="quantite" id="quantite" value="1">
+                    <button type="submit"  class="a-primary col-2 pl-0 text-right" name="ajout_panier"><i class="fas fa-shopping-cart"></i></button>
+                </form>
+                <p class="col-10"><?= $produit->priceTTC() ?> €</p> 
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+
+    <?php else : ?>
+
+
+    <div class="div-cadre col-10 col-md-8 col-lg-6">
+        <h2>Votre recherche</h2>
+        <p>Nous n'avons trouvé aucun résultat correspondant à "<?= $title ?>" </p>
+    </div> 
+
+
+<?php endif; ?>
+
+
+<div class="new-search col-10 col-md-7 col-lg-6">
+    <p>Effectuer une nouvelle recherche</p>
+    <form method="post" action="<?= $url ?>produit/recherche" class="search-container">
+        <input class="search-field col-10" type="text" placeholder="Recherche" aria-label="rechercher" name="term" value="<?= $_POST['term'] ?? '' ?>">
+        <input class="btn col-1 search-input" type="submit" value=""name="rechercher">
+    </form>
+</div>

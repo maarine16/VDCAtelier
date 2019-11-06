@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap4 CSS + Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- Mon css -->
+    <link rel="stylesheet" href="<?= $url ?>css/style_admin.css">
+
+    <title></title>
+</head>
+<body class="content-admin" id="<?= $id ?>">
+
+<section class="nav-admin">
+<input id="hamburger" class="hamburger" type="checkbox" />
+<label for="hamburger" class="hamburger">
+    <i></i>
+    <text>
+        <close>close</close>
+        <open>menu</open>
+    </text>
+    </label>
+    <nav class="primnav">
+    <ul>
+        <li>
+        <a title="Produits" href="">
+            <i class="fas fa-tshirt"></i> Produits
+        </a>
+        </li>
+        <li>
+        <a title="Commandes" href="">
+            <i class="fas fa-shopping-basket"></i> Commandes
+        </a>
+        </li>
+        <li>
+        <a title="Utilisateurs" href="">
+           <i class="fas fa-users"></i>  Utilisateurs
+        </a>
+        </li>
+        <li>
+        <a title="Avis" href="">
+            <i class="fas fa-star"></i> Avis
+        </a>
+        </li>
+        <li>
+        <a title="Mon compte" href="#sysadmin">
+            <i class="fas fa-user-edit"></i> Mon compte
+        </a>
+        </li>
+        <li>
+        <a title="Ma boutique" href="" target="blank">
+            <i class="far fa-eye"></i> Voir ma boutique
+        </a>
+        </li>
+    </ul>
+
+    </nav>
+</section>
+<div class="block-content">
+<?=
+    $content;
+?>
+</div>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Mon js -->
+<script src="<?= $url ?>js/functions_admin.js"></script>
+            
+</body>
+</html>

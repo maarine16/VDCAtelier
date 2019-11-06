@@ -1,0 +1,89 @@
+
+
+
+<?php if (empty($_SESSION['panier'])) : ?>
+
+<div class="div-cadre panier-vide col-md-4 col-sm-6 col-8">
+    <h2>Votre Panier</h2>
+    <p>Il ne contient pas encore d'article,</p>
+    <a href="<?= $url ?>produit/articles"><i class="fas fa-arrow-right"></i> Venez ici pour en shopper !</a>
+</div>
+
+<?php else: ?>
+
+<h1>Votre panier</h1>
+
+<div class="row">
+
+    <div class="col-lg-7 articles-panier">
+        <?php for($i=0; $i<sizeof($_SESSION['panier']['id_produit']);$i++) : ?>
+        <div class="row article">
+            <div class="col-3">
+                <img src="../../web/photo/<?= $content_panier[$i]->getField('photo') ?>" alt="<?= $content_panier[$i]->getField('title') ?>">
+            </div>
+            <a href="<?= $url ?>produit/affiche/<?= $_SESSION['panier']['id_produit'][$i] ?>" class="col-5"><?= $content_panier[$i]->getField('title') ?></a>
+            <div class="price row col-4 col-sm-3">
+                <p class="col-5"><?= $_SESSION['panier']['quantite'][$i] ?></p> x 
+                <p class="col-5"><?= $_SESSION['panier']['quantite'][$i] + $_SESSION['panier']['prix'][$i] ?></p>
+            </div>
+            <form action="" method="post" class="col-12 col-sm-1">
+                <input type="hidden" name="id_produit">
+                <button  class="supp" name="supp_article" type="submit"><i class="fas fa-trash"></i></button>
+            </form>
+        </div>
+        <?php endfor ?>
+
+    </div>
+
+
+    <div class="div-cadre col-11 col-sm-8 col-md-5 col-lg-4">
+        <h2>Votre commande</h2>
+
+        <div class="row">
+            <input type="text" name="code_promo" id="code_promo" class="form-control col-8" placeholder="CODE PROMO">
+            <input type="submit" value="Valider" class="btn col-4 submit" id="valid_code">
+        </div>
+
+        <div class="row">
+            <p class="col-8">Montant HT</p>
+            <p class="col-4"><?= $montant_HT ?> €</p>
+        </div>
+        <div class="row">
+            <p class="col-8">TVA</p>
+            <p class="col-4"><?= $tva ?> €</p>
+        </div>
+        <?php if (isset($code_promo)) : ?>
+        <div class="row">
+            <p class="col-8">Code promo</p>
+            <p class="col-4 code-promo"> €</p>
+        </div>
+        <?php endif; ?>
+        <div class="row">
+            <p class="col-8">Frai de livraison</p>
+            <p class="col-4"><?= $fdp ?> €</p>
+        </div>
+        <?php if (isset($code_promo)) : ?>
+        <div class="row">
+        <p class="col-8 total">Montant TTC</p>
+        <p class="col-4 total"><?= $montant_TTC_code_promo ?> €</p>
+        </div>
+        <?php endif; ?>
+        <div class="row">
+            <p class="col-8 total">Montant TTC</p>
+            <p class="col-4 total"><?= $montant_TTC ?> €</p>
+        </div>
+        
+        <?php if (isset($_SESSION['membre'])) : ?>
+        <form action="<?= $url ?>commande/afficheCommande" method="post">
+            <button type="submit" class="btn-primary" name="validerpanier">Valider votre panier</button>
+        </form>
+        <?php else : ?>
+        <div class="valid-panier">
+        <a href="<?= $url ?>membre/connexion" >Connectez-vous</a>  
+        <a href="<?= $url ?>membre/inscription" >Inscrivez-vous</a>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php endif; ?>

@@ -1,0 +1,43 @@
+<?php 
+if ($_SESSION['membre'] && $_SESSION['membre']->isAdmin()):
+   var_dump($_SESSION['membre']);
+?>
+<section class="accueil_admin">
+<h1>Bonjour <?= $_SESSION['membre']->getField('prenom') ?>   
+    <!-- A faire 
+    Récupérer le nom en dynamique une fois créer -->
+</h1>
+
+<p>Bienvenue dans votre espace de gestion de boutique !</p>
+<p>Ici vous pouvez ajoutez un produit, le modifier ou le supprimer.</p>
+<p>Vous gérez aussi vos commandes et leur suivis,</p>
+<p>Ainsi que vos membres et les avis déposés.</p>
+
+
+<ul>
+
+    <li>
+        <a title="Mail" href="">
+                <i class="fas fa-tshirt"></i> Produits
+        </a>
+    </li>
+    <li>
+        <a title="Notifications" href="">
+            <i class="fas fa-shopping-basket"></i> Commandes
+        </a>
+    </li>
+    <li>
+        <a title="Dashboard" href="">
+            <i class="fas fa-users"></i> Utilisateurs
+        </a>
+    </li>
+    <li>
+        <a title="System Administration" href="">
+            <i class="far fa-eye"></i> Voir ma boutique
+        </a>
+    </li>
+
+
+</ul>
+</section>
+<?php endif ?>

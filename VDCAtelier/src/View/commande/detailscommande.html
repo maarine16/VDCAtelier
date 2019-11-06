@@ -1,0 +1,56 @@
+<h2><?= $title ?> 
+    <?php
+    if (isset($commande)) :
+    ?>
+    n° <?= $commande->getField('id_commande') ?></h2>
+    <p class="alert alert-info">
+        Commande passée le : <?= date('d/m/Y à H:i:s',strtotime($commande->getField('date_enregistrement'))) ?><br>
+        Pour un montant total de : <?= $commande->getField('montant') ?> €<br>
+        Etat : <?= $commande->getField('etat') ?>
+    </p>
+
+<!-- je m'attends à recevoir $details_commande -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Prix Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $somme_totale = 0;
+                $nb_articles=0;
+                for($i=0; $i<sizeof($details_commande);$i++) :
+                    $somme_inter = $details_commande[$i]['quantite'] * $details_commande[$i]['prix'];
+                    $somme_totale += $somme_inter;
+                    $nb_articles += $details_commande[$i]['quantite'];
+                ?>
+                <tr>
+                    <td><?= $details_commande[$i]['id_produit'] ?></td>
+                    <td><a href="<?= $url ?>produit/affiche/<?= $details_commande[$i]['id_produit'] ?>"><?=$details_commande[$i]['titre'] ?></a></td>
+                    <td><?= $details_commande[$i]['quantite'] ?></td>
+                    <td>
+                        <?= $details_commande[$i]['prix'] ?> €
+                    </td>
+                    <td> <?= $somme_inter ?> €</td>
+                </tr>
+                <?php endfor; ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right">Montant total pour <?= $nb_articles ?> article(s)</td>
+                    <td>
+                        <?= $somme_totale ?> €
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    <?php endif; ?>
+    <a href="<?= $url ?>commande/afficheCommande" class="btn btn-primary">Revenir à l'historique des commandes</a>

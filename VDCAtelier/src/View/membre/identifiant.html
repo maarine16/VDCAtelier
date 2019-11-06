@@ -1,0 +1,56 @@
+<div class="row">
+
+    <div class="col-md-4 col-lg-3 nav-user">
+        <div class="identity">
+            <h2><?= $_SESSION['membre']->getField('prenom') . ' ' . $_SESSION['membre']->getField('nom') ?></h2>
+            <p><?= $_SESSION['membre']->getField('email') ?></p>
+        </div>
+        <div class="">
+            <ul class="nav" id="tab" role="tablist">
+                <li>
+                    <a class="nav-link" href="<?= $url ?>membre/moncompte"><i class="fa fa-user"></i>Mes informations personnelles</a>
+                </li>
+                <li>
+                    <a class="nav-link active" href="<?= $url ?>membre/mesidentifiants"><i class="fas fa-lock"></i>Mes identifiants</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="<?= $url ?>commande/mescommandes"><i class="fas fa-shopping-bag"></i>Mes commandes</a>
+                </li>
+            </ul>
+        </div>
+        <a href="<?= $url ?>membre/deconnexion">
+            <input type="text" name="deconnexion" id="deconnexion" value="Se déconnecter">
+        </a>
+    </div>
+    
+    <div class="col-md-8 col-lg-9 content-user info-user">
+        <section class="wrapper">
+            <?php if (!empty($erreur) ) : ?>
+            <div class="alert alert-danger"><?= $erreur ?></div>
+            <?php endif; ?>
+
+
+            <h1>Mes identifiants</h1>
+
+            <?php if (isset($action) && $action=='edit_password'): ?>
+            <form action="" method="post" class="password">
+                <input type="password" name="password" id="password" placeholder="Nouveau mot de passe" class="form-control">
+                <input type="password" name="confirmation-password" id="confirmation-password" placeholder="Confirmation du mot de passe" class="form-control">
+                <input type="submit" name="valid_password" value="Valider le mot de passe" class="btn btn-primary">
+            </form>
+            <a href="<?= $url ?>membre/mesidentifiants" class="previous"><i class="fas fa-arrow-left"></i> Revenir sur le profil</a>
+
+            <?php else : ?>
+            <?php if (!empty($success) ) : ?>
+            <div class="alert alert-success"><?= $success ?></div>
+            <?php endif; ?>
+            <div class="identifiant">
+                    <p>Adresse email : <?= $_SESSION['membre']->getField('email'); ?> </p>
+                    <p>Mot de passe : *******</p>
+            </div>
+    
+            <a href="<?= $url ?>membre/modif_password/password" class="btn btn-primary">Modifier mon mot de passe</a>
+            <?php endif; ?>
+
+        </section>
+    </div>

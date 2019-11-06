@@ -1,0 +1,75 @@
+<h2><?= $title ?>
+</h2>
+<?php
+if ($_SESSION['membre'] && $_SESSION['membre']->isAdmin()):
+
+// enctype="multipart/form-data" permet d'alimenter la superglobale $_FILES avec les éléments provenant des input de type="file"
+
+?>
+<?php if (!empty($erreur) ) : ?>
+    <div class="alert alert-danger"><?= $erreur ?></div>
+<?php endif; ?>
+
+<form method="post" action="" enctype="multipart/form-data">
+
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="reference">Référence</label>
+                <input type="text" name="reference" id="reference" value="<?= $produit_actuel['reference'] ?? '' ?>" class="form-control">
+                <label for="categorie">Catégorie</label>
+                <input type="text" name="categorie" id="categorie" value="<?= $produit_actuel['categorie'] ?? '' ?>" class="form-control">
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" id="titre" value="<?= $produit_actuel['titre'] ?? '' ?>" class="form-control"
+                >
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="form-control" rows="7"><?= $produit_actuel['description'] ?? '' ?></textarea>
+
+
+            </div>
+            <div class="col-sm-6">
+
+                <label for="couleur">Couleur</label>
+                <input type="text" name="couleur" id="couleur" value="<?= $produit_actuel['couleur'] ?? '' ?>" class="form-control">
+
+                <label for="taille">Taille</label>
+                <input type="text" name="taille" id="taille" value="<?= $produit_actuel['taille'] ?? '' ?>" class="form-control">
+
+                <label for="public">public</label>
+                <select name="public" class="form-control">
+                    <option  <?= ( isset($produit_actuel['public']) && $produit_actuel['public'] == 'm' ) ? 'selected' : '' ?> value="m">Homme</option>
+                    <option <?= ( isset($produit_actuel['public']) && $produit_actuel['public'] == 'f' ) ? 'selected' : '' ?> value="f">Femme</option>
+                    <option <?= ( isset($produit_actuel['public']) && $produit_actuel['public'] == 'mixte' ) ? 'selected' : '' ?>value="mixte">Mixte</option>
+                </select>
+
+                <?php
+                    if (isset($produit_actuel['photo']) ) : ?>
+                    <img src="<?= $url ?>photo/<?= $produit_actuel['photo'] ?>" class="thumbnail img-fluid"> 
+                <?php
+                    endif;
+                ?>
+                <label for="photo">Photo</label>
+                <input type="file" name="photo" id="photo" value="" class="form-control">
+
+                <label for="prix">Prix</label>
+                <input type="number" name="prix" id="prix" value="<?= $produit_actuel['prix'] ?? '' ?>" class="form-control">
+
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" id="stock" value="<?= $produit_actuel['stock'] ?? '' ?>" class="form-control">
+            </div>   
+        </div>
+
+        <div class="row">        
+            <div class="col-12 text-center">
+                <input type="submit" class="btn btn-primary" value="Enregistrer le produit">
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<?php
+endif;
+?>
+
+

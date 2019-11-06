@@ -1,0 +1,78 @@
+<div class="row">
+
+    <div class="col-md-4 col-lg-3 nav-user">
+        <div class="identity">
+            <h2><?= $_SESSION['membre']->getField('prenom') . ' ' . $_SESSION['membre']->getField('nom') ?></h2>
+            <p><?= $_SESSION['membre']->getField('email') ?></p>
+        </div>
+        <div class="">
+            <ul class="nav" id="tab" role="tablist">
+                <li>
+                    <a class="nav-link active" href="<?= $url ?>membre/moncompte"><i class="fa fa-user"></i>Mes informations personnelles</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="<?= $url ?>membre/mesidentifiants"><i class="fas fa-lock"></i>Mes identifiants</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="<?= $url ?>commande/mescommandes"><i class="fas fa-shopping-bag"></i>Mes commandes</a>
+                </li>
+            </ul>
+        </div>
+        <a href="<?= $url ?>membre/deconnexion">
+            <input type="text" name="deconnexion" id="deconnexion" value="Se déconnecter">
+        </a>
+    </div>
+    
+    <div class="col-md-8 col-lg-9 content-user info-user">
+        <section class="wrapper">
+            <h1>Mes informations personnelles</h1>
+            <?php if ( isset($action) && $action == 'edit_info') :  ?>
+            <form action="" method="post">
+                <div class="form-row">
+                    <div class="form-group col-6">
+                    <label for="nom">Nom</label>
+                    <input class="form-control" type="text"  name="nom" id="nom" value="<?= $_SESSION['membre']->getField('nom') ?>">
+                    </div>
+                    <div class="form-group col-6">
+                    <label for="prenom">Prénom</label>
+                    <input class="form-control" type="text"  name="prenom" id="prenom" value="<?= $_SESSION['membre']->getField('prenom') ?>">        
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input class="form-control" type="text"  name="address" id="address" value="<?= $_SESSION['membre']->getField('address') ?>">        
+                </div>
+                <div class="form-row">
+                        <div class="form-group col-3">
+                        <label for="postal_code">CP</label>
+                        <input class="form-control" type="number"  name="postal_code" id="postal_code" value="<?= $_SESSION['membre']->getField('postal_code') ?>">
+                        </div>
+                        <div class="form-group col-9">
+                        <label for="city">Ville</label>
+                        <input class="form-control" type="text"  name="city" id="city" value="<?= $_SESSION['membre']->getField('city') ?>">        
+                        </div>
+                </div>
+                <input type="submit" class="btn btn-primary" name="valid_info" value="Valider">
+            </form>
+            <a href="<?= $url ?>membre/moncompte" class="previous"><i class="fas fa-arrow-left"></i> Revenir sur le profil</a>
+
+            <?php else : ?>
+            <div class="identity">
+                <h2>
+                <?= $_SESSION['membre']->getField('prenom').' '.$_SESSION['membre']->getField('nom') ?>
+                </h2>
+                Adresse:
+                <p>
+                    <adress>
+                        <?= $_SESSION['membre']->getField('address') ?><br>
+                        <?= $_SESSION['membre']->getField('postal_code') ?>  <?= $_SESSION['membre']->getField('city') ?> 
+                    </adress>
+                </p>
+            </div>
+            <a href="<?= $url ?>membre/modifProfil/coord" class="btn btn-primary">Modifier mes coordonnées</a>
+        
+            <?php endif; ?>
+    
+        </section>
+    </div>
+</div>

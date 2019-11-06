@@ -1,0 +1,61 @@
+<section class="block-bienvenue">
+    <div class="text-bienvenue">
+        <p>Bienvenue sur</p>
+        <h1>VDC Atelier</h1>
+    </div>
+</section>
+
+<section class="a-propos">
+    <div class="row">
+        <span class="col-1"></span> <h2 class="col-xl-2 col-md-3 col-sm-4 col-5">VDC Atelier</h2> <span class="col-1"></span>
+    </div>
+    <p>Passionnée de couture et broderie, j'ai décidé de lance mon projet à la suite de vos nombreuses demandes. Je vais partager avec vous mon savoir faire, mes idées et mes créations. Sur VDC Atelier, vous pourrez trouver des numérisations (motifs) qui vous permetteront de créer vos propres idées, mais vous pourrez aussi acheter des articles que j'aurai conçu tels que des vêtements ou des accessoires brodés</p>
+
+</section>
+
+
+<section class="block-products row">
+    <div class="block-product h2 col-md-6 col-lg-4 col-xl-3">
+        <h2>Découvrez les articles</h2> 
+    </div>
+    <?php foreach($produits as $produit) : ?>
+
+
+    <div class="block-product px-1 col-md-6 col-lg-4 col-xl-3">
+
+        <a href="<?= $url ?>produit/affiche/<?= $produit['id_produit'] ?>">
+            <img src="<?= $url ?>photo/<?= $produit['photo'] ?>" alt="<?= $produit['title'] ?>" class="img-fluid">
+        </a>
+
+        <div class="row">
+            <h3 class="col-10"><a href="<?= $url ?>produit/affiche/<?= $produit['id_produit'] ?>"><?= $produit['title'] ?></a></h3>
+            <a href="" class="col-2 pl-0 text-right a-primary"><i class="fas fa-shopping-cart"></i></a>
+            <p class="col-10">    
+                <?php $montant_tva = ($produit['price_ht'] * $produit['tva']) / 100; ?>
+                <?= $price_ttc =  $produit['price_ht'] + $montant_tva; ?> €
+            </p> 
+            <a href="" class="col-2 pl-0 text-right a-primary"><i class="fas fa-heart"></i></a>
+        </div>
+    </div>
+    <?php endforeach; ?>
+    <div class="block-product next col-md-6 col-lg-4 col-xl-3">
+        <a href="<?= $url ?>produit/articles" class="next">Voir tous les articles <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+
+<section class="block-contact">
+    <div class="row">
+        <div class="block-left col-md-6"></div>
+        <div class="block-right col-md-6">
+            <div class="content-contact">
+                <h2>Contactez-moi</h2>
+                <p>Une question ? Un besoin particulier ? N'hésitez pas à me contactez</p>
+                <button>Contacter</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

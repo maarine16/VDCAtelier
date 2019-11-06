@@ -1,0 +1,64 @@
+<h2><?= $title ?></h2>
+
+<?php
+
+/*
+il m'arrive $title, $commandes et $details_commandes
+*/
+
+if (isset($commandes)) :
+
+    foreach($commandes as $commande):
+    ?>
+    <div class="row border bg-primary text-light">
+        <div class="col-sm-4">
+                Commande <?= $commande ['id_commande'] ?> de <strong><?= $commande['pseudo'] ?></strong>
+        </div>
+        <div class="col-sm-4">
+                En date du <?= date('d/m/Y à H:i:s',strtotime($commande['date_enregistrement'])) ?>
+        </div>
+        <div class="col-sm-4">
+            <?= $commande['montant'] ?> €
+        </div>
+    </div>
+    <div class="row mt-3">
+            <div class="col-sm-4">
+    <?php
+
+    $civilite = ($commande['civilite'] == 'm') ? 'M' : 'Mme';
+    echo '<ul>';
+        foreach($details_commandes[$commande['id_commande']] as $ligne){
+            echo '<li><a href="'.$url.'produit/affiche/'.$ligne['id_produit'].'">'.$ligne['titre'].'</a> <span class="badge badge-primary"> x '.$ligne['quantite'].'</span><em> ('.$ligne['prix'].' €/pièce)</em><br>
+                <strong>Ref.: '.$ligne['reference'].'</strong>
+            </li>';
+        }
+    ?>  </ul>
+    </div>
+    <div class="col-sm-4">
+        <strong>Adresse:</strong>
+        <address>
+                <?= $civilite ?> <?= $commande['prenom'] ?> <?= $commande['nom'] ?><br>
+                <?= $commande['adresse'] ?><br>
+                <?= $commande['code_postal'] ?> <?= $commande['ville'] ?>
+        </address>
+
+    </div>
+
+    <div class="col-sm-4">
+        Statut actuel : <?= $commande['etat'] ?>
+        
+        <div class="btn-group" role="group" >
+            <a href="<?= $url ?>commande/changeStatut/<?= $commande ['id_commande'] ?>-2" class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i> Statut 'Envoyé'</a>
+            <a href="<?= $url ?>commande/changeStatut/<?= $commande ['id_commande'] ?>-3" class="btn btn-primary"><i class="fa fa-arrow-circle-right"></i> Statut 'Livré'</a>
+        </div>
+            
+    </div>
+
+    </div>
+    <?php
+    endforeach;
+else : ?>
+<div class="alert alert-info">Il n'y a pas encore de commandes à traiter</div>
+<?php
+endif;
+?>

@@ -1,0 +1,145 @@
+<!-- <div class="row">
+    <div class="col-sm-3">
+        <div class="list-group">
+            <p class="list-group-item text-center">CATEGORIES</p>
+            <a href="<?= $url ?>produit/afficheAll" class="list-group-item <?= (!isset($selected)) ? 'active' : '' ?>">Toutes</a>
+            <?php foreach($categories as $cat) : ?>
+                <a class="list-group-item <?= (isset($selected) && $selected == $cat['categorie']) ? 'active' : '' ?>" href="<?= $url ?>produit/afficheCategorie/<?= $cat['categorie'] ?>"><?= ucfirst($cat['categorie']) ?></a>
+            <?php endforeach; ?>
+
+        </div>
+
+    </div>
+    <div class="col-sm-9">
+        <div class="jumbotron">
+            <h1>Bienvenue sur notre boutique !!</h1>
+            <p>De nouveaux articles sont arrivés!</p>
+        </div>
+        <div class="row">
+
+            <?php foreach($produits as $produit) : ?>
+            <div class="col-6 col-md-4">
+                <div class="card mt-3 border">
+                    <div class="card-body">
+                        <div class="card-title text-center">
+                            <h2><?= $produit->getField('titre') ?></h2>
+                        </div>
+                        <p>
+                            <a href="<?= $url ?>produit/affiche/<?= $produit->getField('id_produit') ?>">
+                                <img src="<?= $url ?>photo/<?= $produit->getField('photo') ?>" alt="" class="card-img img-fluid">
+                            </a>
+                        </p>
+                        <p class="text-center"><?= $produit->getField('prix') ?> €
+                        </p>
+                        <p class="text-center">
+                            <a class="btn btn-primary" href="<?= $url ?>produit/affiche/<?= $produit->getField('id_produit') ?>">Voir les détails &raquo; </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+
+        </div>
+
+    </div>
+
+</div>
+</div> -->
+
+<div class="row">
+    <div class="filtre col-12 col-lg-3 col-xl-2">
+        <h2>Les catégories</h2>
+        <div class="filtre-category">
+            <a class="list-group-item"  href="<?= $url ?>produit/articles">Afficher tous les articles</a>
+            <?php foreach ($categories as $cat) : ?>
+            <a class="list-group-item "  href="<?= $url ?>produit/categorie/<?= $cat['category'] ?>"><?= $cat['category'] ?></a>
+            <?php endforeach; ?>
+        </div>
+        
+        <h2 id="title_filtre">Filtres</h2>
+
+        <div class="filtre-price block-filtre ">
+            <h3>Prix compris entre :</h3>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="0_5" value="0_5">
+                <label class="form-check-label" for="0_5">0€ et 5€</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="5_10" value="5_10">
+                <label class="form-check-label" for="0_5">5€ et 10€</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="10_15" value="10_15">
+                <label class="form-check-label" for="0_5">10€ et 15€</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="15_" value="15_">
+                <label class="form-check-label" for="0_5">15€ et plus</label>
+            </div>
+        </div>
+
+        <div class="filtre-taille block-filtre ">
+            <div class="form-group">
+                <h3><label for="taille">Selectionner une taille</label></h3>
+                <select class="form-control" id="taille">
+                    <option value="xs">xs</option>
+                    <option value="s">s</option>
+                    <option value="m">m</option>
+                    <option value="l">l</option>
+                    <option value="xl">xl</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filtre-point block-filtre ">
+            <h3>Nombres de points :</h3>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="50" value="50">
+                <label class="form-check-label" for="50">inferieur à 50</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="50_100" value="50_100">
+                <label class="form-check-label" for="50_100">entre 50 et 100</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="100" value="100">
+                <label class="form-check-label" for="100">superieur à 100</label>
+            </div>
+        </div>
+    </div>
+    <div class="products col-12 col-lg-9 col-xl-10">
+      
+        <?php if ($url == $url.'produit/articles') : ?>
+        <h1 class="title-page col-12">Tous les articles</h1>
+        <?php else :
+            foreach ($produits as $key => $value) : 
+                if ($key == 0) : ?>
+                <h1 class="title-page col-12"><?= $value->getField('category') ?></h1>  
+                <?php
+                endif;
+            endforeach;
+        endif; ?>    
+
+        <?php foreach ($produits as $produit) : ?>
+        <div class="block-product col-12 col-sm-6 col-md-4 col-xl-3 px-1">
+
+            <a href="<?= $url ?>produit/affiche/<?= $produit->getField('id_produit') ?>">
+                <img src="<?= $url ?>photo/<?= $produit->getField('photo') ?>" alt="<?= $produit->getField('title') ?>" class="img-fluid">
+            </a>
+
+            <div class="row">
+                <h3 class="col-10"><a href="<?= $url ?>produit/affiche/<?= $produit->getField('id_produit') ?>"><?= $produit->getField('title') ?></a></h3>
+                <form method="post" action="">
+                    <input type="hidden" name="id_produit" value="<?= $produit->getField('id_produit') ?>">
+                    <input type="hidden" name="quantite" id="quantite" value="1">
+                    <button type="submit"  class="a-primary col-2 pl-0 text-right" name="ajout_panier"><i class="fas fa-shopping-cart"></i></button>
+                </form>
+                <p class="col-10"><?= $produit->priceTTC() ?> €</p> 
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+
+

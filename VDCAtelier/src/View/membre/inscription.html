@@ -1,0 +1,57 @@
+<h1>Inscription</h1>
+
+<form action="" method="post">
+    <div id="user">
+        <?php if (!empty($erreur) ) : ?>
+        <div class="alert alert-danger"><?= $erreur ?></div>
+        <?php endif; ?>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="<?= $_POST['email'] ?? '' ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" value="" class="form-control">
+        </div>
+
+
+        <div class="form-group">
+            <label for="civility">Civilité</label>
+
+            <select name="civility"  class="form-control">
+                <option value="m" <?= (!isset($_POST['civilite']) || ($_POST['civilite'] && $_POST['civilite'] =='m')) ? 'selected' : '' ?>>Monsieur</option>
+                <option value="f" <?= (!isset($_POST['civilite']) || ($_POST['civilite'] && $_POST['civilite'] =='f')) ? 'selected' : '' ?>>Madame</option>
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" id="nom" value="<?= $_POST['nom'] ?? '' ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" name="prenom" id="prenom" value="<?= $_POST['prenom'] ?? '' ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="address">Adresse</label>
+            <input type="text" name="address" id="address" value="<?= $_POST['address'] ?? '' ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="postal_code">Code postal</label>
+            <input type="number" name="postal_code" id="postal_code" value="<?= $_POST['postal_code'] ?? '' ?>" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="city">Ville</label>
+            <input type="text" name="city" id="city" value="<?= $_POST['city'] ?? '' ?>" class="form-control">
+        </div>
+
+    </div>
+	<input type="submit"  class="btn btn-primary" value="S'inscrire">
+</form>
+<a href="<?= $url ?>membre/connexion">Vous êtes déjà inscrit ?</a>
